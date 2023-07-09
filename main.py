@@ -22,7 +22,7 @@ class Game:
     def draw(self):
         self.screen.fill(BGCOLOR)
         self.board.draw(self.screen)
-        pygame.display.flip()
+        pygame.display.flip() 
 
     def events(self):
         for event in pygame.event.get():
@@ -31,7 +31,8 @@ class Game:
                 quit(0)
 
 #starts Game
-game =Game()
+game = Game()
+
 while True:
     game.new()
     game.run()
