@@ -30,6 +30,23 @@ class Game:
                 pygame.quit()
                 quit(0)
 
+            if event.type==pygame.MOUSEBUTTONDOWN:
+                mx, my = pygame.mouse.get_pos()
+                mx //= TILESIZE
+                my //= TILESIZE
+
+                if event.button == 1:
+                    if not self.board.board_list[mx][my].flagged:
+                        #dig and check if exploded
+                        pass
+
+                if event.button == 3:
+                    if not self.board.board_list[mx][my].revealed:  
+                        self.board.board_list[mx][my].flagged = not self.board.board_list[mx][my].flagged
+                
+
+
+
 #starts Game
 game = Game()
 
