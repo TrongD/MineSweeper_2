@@ -34,6 +34,8 @@ class Board:
         self.board_list =[[Tile(col, row, tile_empty, ".") for row in range(ROWS)] for col in range (COLS)]
         self.place_mines()
         self.place_clues()
+        self.dug=[]
+
 
     #place landmines
     def place_mines(self):
@@ -79,6 +81,29 @@ class Board:
                 tile.draw(self.board_surface)
         screen.blit(self.board_surface, (0,0))
 
+
+    #recursively check and reveal tiles that has no bombs up to and including tile with clue.
+    def dig(self, x, y):   
+        self.dug.append((x,y))
+        if self.board_list[x][y].type == "X":
+            self.board_list[x][y].revealed ==True
+            self.board_list[x][y].image = tile_exploded
+            return False
+        
+        elif self.board_list[x][y].type == "C":
+            self.board_list[x][y].revealed = True
+            return True
+    
+        self.board_list[x][y].revealed = True
+
+        for row in range(max(0, x-1), min(ROWS-1, x+1) +1):     #need to do this to ensure tile to be checked is inside board, +1 at end because of range() function.
+            for col in range(max(0, y-1), min(COLS-1, y+1) +1):
+                if (row, col) not in self.dug:
+                    self.dig(row, col)
+
+        return True
+
+    
     def display_board(self):
         for row in self.board_list:
             print(row)

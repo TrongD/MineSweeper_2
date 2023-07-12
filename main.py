@@ -38,7 +38,15 @@ class Game:
                 if event.button == 1:
                     if not self.board.board_list[mx][my].flagged:
                         #dig and check if exploded
-                        pass
+                        if not self.board.dig(mx, my):  #dig first
+                            #explode, is a mine if code reaches here
+                            for row in self.board.board_list:
+                                for tile in row:
+                                    if tile.flagged and tile.type != "X":       #clicked on mine, if flagged tile isnt bomb, reveal 'not bomb image'
+                                        tile.flagged = False
+                                        tile.revealed = True
+                                        tile.image = tile_not_mine
+
 
                 if event.button == 3:
                     if not self.board.board_list[mx][my].revealed:  
