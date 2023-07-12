@@ -1,4 +1,11 @@
 ###Minesweeper game based on tutorials :)
+#Todo:
+# add button choice for difficulty, new game, quit, options
+# keep screen open after game ends
+# add score counter
+# add flag counter
+
+# add question mark tile for undecided (not sure whether to flag as bomb or not)
 
 import pygame
 from settings import *
@@ -20,6 +27,8 @@ class Game:
             self.clock.tick(FPS)
             self.events()
             self.draw()
+        else:
+            self.end_screen()
 
     def draw(self):
         self.screen.fill(BGCOLOR)
@@ -31,6 +40,7 @@ class Game:
             for tile in row:
                 if tile.type != "X" and not tile.revealed:
                     return False
+                
         return True
 
     def events(self):
