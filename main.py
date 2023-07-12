@@ -9,7 +9,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
     def new(self): #create new game
-        self.board =Board()
+        self.board = Board()
         self.board.display_board()
 
     def run(self):
@@ -45,6 +45,15 @@ class Game:
                                     if tile.flagged and tile.type != "X":       #clicked on mine, if flagged tile isnt bomb, reveal 'not bomb image'
                                         tile.flagged = False
                                         tile.revealed = True
+# =======
+#                         if not self.board.dig(mx, my):
+#                             #explode
+#                             for row in self.board.board_list:
+#                                 for tile in row:
+#                                     if tile.flagged and tile.type != "X":
+#                                         tile.flagged = False
+#                                         tile.revealed = True
+# >>>>>>> 786acdbc302bbcd1fd652882618a19be66d97c96
                                         tile.image = tile_not_mine
 
 
