@@ -1,3 +1,5 @@
+###Minesweeper game based on tutorials :)
+
 import pygame
 from settings import *
 from sprites import *
@@ -24,44 +26,60 @@ class Game:
         self.board.draw(self.screen)
         pygame.display.flip() 
 
+    def check_win(self):
+        for row in self.board.board_list:
+            for tile in row:
+                if tile.type != "X" and not tile.revealed:
+                    return False
+        return True
+
     def events(self):
         for event in pygame.event.get():
-            if event.type ==pygame.QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit(0)
 
-            if event.type==pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 mx, my = pygame.mouse.get_pos()
                 mx //= TILESIZE
                 my //= TILESIZE
 
                 if event.button == 1:
                     if not self.board.board_list[mx][my].flagged:
-                        #dig and check if exploded
-                        if not self.board.dig(mx, my):  #dig first
-                            #explode, is a mine if code reaches here
+                        # dig and check if exploded
+                        if not self.board.dig(mx, my):
+                            # explode
                             for row in self.board.board_list:
                                 for tile in row:
-                                    if tile.flagged and tile.type != "X":       #clicked on mine, if flagged tile isnt bomb, reveal 'not bomb image'
+                                    if tile.flagged and tile.type != "X":
                                         tile.flagged = False
                                         tile.revealed = True
-# =======
-#                         if not self.board.dig(mx, my):
-#                             #explode
-#                             for row in self.board.board_list:
-#                                 for tile in row:
-#                                     if tile.flagged and tile.type != "X":
-#                                         tile.flagged = False
-#                                         tile.revealed = True
-# >>>>>>> 786acdbc302bbcd1fd652882618a19be66d97c96
                                         tile.image = tile_not_mine
-
+                                    elif tile.type == "X":
+                                        tile.revealed = True
+                            self.playing = False
 
                 if event.button == 3:
-                    if not self.board.board_list[mx][my].revealed:  
+                    if not self.board.board_list[mx][my].revealed:
                         self.board.board_list[mx][my].flagged = not self.board.board_list[mx][my].flagged
-                
 
+                if self.check_win():
+                    self.win = True
+                    self.playing = False
+                    for row in self.board.board_list:
+                        for tile in row:
+                            if not tile.revealed:
+                                tile.flagged = True
+
+    def end_screen(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit(0)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    return
 
 
 #starts Game

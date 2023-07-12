@@ -82,8 +82,6 @@ class Board:
                 tile.draw(self.board_surface)
         screen.blit(self.board_surface, (0,0))
 
-
-# <<<<<<< HEAD
     #recursively check and reveal tiles that has no bombs up to and including tile with clue.
     def dig(self, x, y):   
         self.dug.append((x,y))
@@ -104,29 +102,7 @@ class Board:
                     self.dig(row, col)
 
         return True
-
     
-# =======
-#     def dig(self,x, y):
-#         self.dug.append((x,y))
-#         if self.board_list[x][y].type == "X":
-#             self.board_list[x][y].revealed = True
-#             self.board_list[x][y].image= tile_exploded
-#             return False
-#         elif self.board_list[x][y] == "C":
-#             self.board_list[x][y].revealed ="True"
-#             return True
-#
-#         self.board_list[x][y].revealed = "True"
-#
-#         for row in range(max(0, x-1), min(ROWS-1, x+1) +1):     #min and max to make sure tile is within board, +1 to be inclusive of highest tile
-#             for col in range(max(0, y-1), min(COLS-1, y+1) +1):
-#                 if (row, col) not in self.dug:
-#                     self.dig(row, col)
-#
-#         return True
-#
-# >>>>>>> 786acdbc302bbcd1fd652882618a19be66d97c96
     def display_board(self):
         for row in self.board_list:
             print(row)
