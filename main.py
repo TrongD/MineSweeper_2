@@ -9,7 +9,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
     def new(self): #create new game
-        self.board =Board()
+        self.board = Board()
         self.board.display_board()
 
     def run(self):
@@ -38,7 +38,15 @@ class Game:
                 if event.button == 1:
                     if not self.board.board_list[mx][my].flagged:
                         #dig and check if exploded
-                        pass
+                        if not self.board.dig(mx, my):
+                            #explode
+                            for row in self.board.board_list:
+                                for tile in row:
+                                    if tile.flagged and tile.type != "X":
+                                        tile.flagged = False
+                                        tile.revealed = True 
+                                        tile.image = tile_not_mine
+
 
                 if event.button == 3:
                     if not self.board.board_list[mx][my].revealed:  
